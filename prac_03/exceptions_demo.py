@@ -16,3 +16,21 @@ except ValueError:
 except ZeroDivisionError:
     print("Cannot divide by zero!")
 print("Finished.")
+
+# 1. When the input is not an integer.
+# 2. When the denominator is zero.
+# 3.
+# valid_input = False
+# while not valid_input:
+#     try:
+#         numerator = int(input("Enter the numerator: "))
+#         denominator = int(input("Enter the denominator: "))
+#         while denominator == 0:
+#             print("Cannot divide by zero!")
+#             denominator = int(input("Enter the denominator: "))
+#         fraction = numerator / denominator
+#         print(fraction)
+#         valid_input = True
+#     except ValueError:
+#         print("Numerator and denominator must be valid numbers!")
+# print("Finished.")
