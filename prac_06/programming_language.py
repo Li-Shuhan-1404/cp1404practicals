@@ -4,7 +4,7 @@ Own simple class for a programming language
 """
 
 
-class ProgrammingLangauge:
+class ProgrammingLanguage:
 
     def __init__(self, name="", typing="", is_reflection=False, year=0):
         """Initializing Properties"""
