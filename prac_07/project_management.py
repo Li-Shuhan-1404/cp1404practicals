@@ -31,13 +31,34 @@ def main():
             projects = filter_project(projects)
         elif choice == "A":
             add_project(projects)
-        # elif choice == "U":
-        #     projects = update_project(projects)
+        elif choice == "U":
+            projects = update_project(projects)
         else:
             print("Invalid choice")
         print(MENU)
         choice = input(">>> ").upper()
     print("Thank you for using custom-built project management software.")
+
+
+def update_project(projects):
+    """Change the completion or priority of project"""
+    for i, project in enumerate(projects):
+        print(f"{i} {project.name}, start: {project.start_date}, priority {project.priority}, "
+              f"estimate: ${project.cost}, completion: {project.complete}%")
+
+    choice = int(input("Project choice: "))
+    project = projects[choice]
+    print(f"{project.name}, start: {project.start_date}, priority {project.priority}, estimate: ${project.cost}, "
+          f"completion: {project.complete}%")
+    new_percentage = input("New Percentage: ")
+    new_priority = input("New Priority: ")
+
+    if new_percentage:
+        projects[choice].complete = int(new_percentage)
+    if new_priority:
+        projects[choice].priority = int(new_priority)
+
+    return projects
 
 
 def add_project(projects):
