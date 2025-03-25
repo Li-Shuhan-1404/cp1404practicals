@@ -1,11 +1,12 @@
 """
 CP1404/CP5632 Practical
 Word Occurrences
-Estimate: 120 minutes
+Estimate: 180 minutes
 Actual:   34 minutes
 """
 
 from prac_07.project import Project
+from datetime import datetime
 
 TITLE = "Name\tStart Date\tPriority\tCost Estimate\tCompletion Percentage"
 MENU = "- (L)oad projects\n- (S)ave projects\n- (D)isplay projects\n- (F)ilter projects by date" \
@@ -15,6 +16,8 @@ MENU = "- (L)oad projects\n- (S)ave projects\n- (D)isplay projects\n- (F)ilter p
 def main():
     filename = "projects.txt"
     projects = load_file(filename)
+    print("Welcome to Pythonic Project Management")
+    print(f"Loaded {len(projects)} projects from {filename}")
     print(MENU)
     choice = input(">>> ").upper()
     while choice != "Q":
@@ -24,8 +27,8 @@ def main():
             save_project(filename, projects)
         elif choice == "D":
             display_project(projects)
-        # elif choice == "F":
-        #     projects = filter_project(projects)
+        elif choice == "F":
+            projects = filter_project(projects)
         # elif choice == "A":
         #     add_project(projects)
         # elif choice == "U":
@@ -37,16 +40,37 @@ def main():
     print("Thank you for using custom-built project management software.")
 
 
+def filter_project(projects):
+    """Show project who start after date"""
+    is_valid = False
+    while not is_valid:
+        try:
+            filter_project_date = []
+            date = input("Show projects that start after date (dd/mm/yy): ")
+            filter_date = datetime.strptime(date, "%d/%m/%Y").date()
+            for project in projects:
+                data_project = datetime.strptime(project.start_date, "%d/%m/%Y").date()
+                if filter_date <= data_project:
+                    filter_project_date.append(project)
+            filter_project_date.sort(key=lambda x: datetime.strptime(x.start_date, "%d/%m/%Y"))
+            display_project_detail(filter_project_date)
+            is_valid = True
+        except ValueError:
+            print("Incorrect data format (day/month/year)")
+    return projects
+
+
 def display_project(projects):
     """Display not or complete project"""
     incomplete_project = []
     complete_project = []
-    projects.sort()
     for project in projects:
         if project.complete == 100:
             complete_project.append(project)
+            complete_project.sort()
         else:
             incomplete_project.append(project)
+            incomplete_project.sort()
     print("Incomplete projects:")
     display_project_detail(incomplete_project)
     print("Complete projects:")
@@ -76,8 +100,8 @@ def save_project(filename, projects):
     """Save project into file"""
     with open(filename, 'w') as out_file:
         print(TITLE, file=out_file)
-        for line in projects:
-            print(line, file=out_file)
+        for project in projects:
+            print(project, file=out_file)
 
 
 main()
