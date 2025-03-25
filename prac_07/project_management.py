@@ -29,8 +29,8 @@ def main():
             display_project(projects)
         elif choice == "F":
             projects = filter_project(projects)
-        # elif choice == "A":
-        #     add_project(projects)
+        elif choice == "A":
+            add_project(projects)
         # elif choice == "U":
         #     projects = update_project(projects)
         else:
@@ -38,6 +38,20 @@ def main():
         print(MENU)
         choice = input(">>> ").upper()
     print("Thank you for using custom-built project management software.")
+
+
+def add_project(projects):
+    """Add new project"""
+    print("Let's add a new project")
+    try:
+        name = input("Name: ")
+        start_date = input("Start date (dd/mm/yy): ")
+        priority = int(input("Priority: "))
+        cost = float(input("Cost estimate: $"))
+        complete = int(input("Percent complete: "))
+        projects.append(Project(name, start_date, priority, cost, complete))
+    except ValueError:
+        print("Invalid input")
 
 
 def filter_project(projects):
