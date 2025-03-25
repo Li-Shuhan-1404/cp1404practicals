@@ -1,8 +1,8 @@
 """
 CP1404/CP5632 Practical
 Word Occurrences
-Estimate: 180 minutes
-Actual:   34 minutes
+Estimate: 120 minutes
+Actual:   144 minutes
 """
 
 from prac_07.project import Project
@@ -14,6 +14,7 @@ MENU = "- (L)oad projects\n- (S)ave projects\n- (D)isplay projects\n- (F)ilter p
 
 
 def main():
+    """Main menu for project program selection"""
     filename = "projects.txt"
     projects = load_file(filename)
     print("Welcome to Pythonic Project Management")
@@ -28,15 +29,18 @@ def main():
         elif choice == "D":
             display_project(projects)
         elif choice == "F":
-            projects = filter_project(projects)
+            filter_project(projects)
         elif choice == "A":
             add_project(projects)
         elif choice == "U":
-            projects = update_project(projects)
+            update_project(projects)
         else:
             print("Invalid choice")
         print(MENU)
         choice = input(">>> ").upper()
+    enter = input("Would you like to save to projects.txt? ").lower()
+    if enter == "yes":
+        save_project(filename, projects)
     print("Thank you for using custom-built project management software.")
 
 
@@ -73,6 +77,7 @@ def add_project(projects):
         projects.append(Project(name, start_date, priority, cost, complete))
     except ValueError:
         print("Invalid input")
+    return projects
 
 
 def filter_project(projects):
@@ -92,7 +97,6 @@ def filter_project(projects):
             is_valid = True
         except ValueError:
             print("Incorrect data format (day/month/year)")
-    return projects
 
 
 def display_project(projects):
@@ -136,7 +140,8 @@ def save_project(filename, projects):
     with open(filename, 'w') as out_file:
         print(TITLE, file=out_file)
         for project in projects:
-            print(project, file=out_file)
+            print(f"{project.name}\t{project.start_date}\t{project.priority}\t{project.cost}\t{project.complete}",
+                  file=out_file)
 
 
 main()
